@@ -14,12 +14,11 @@ import { Cliente } from '../cliente.model';
 export class EdicaoComponent implements OnInit {
 
   cliente: Cliente = {
-    id: 0,
     id_usuario: 0,
     nome: '',
     status: false,
     inicio_vigencia: new Date(),
-    fim_vigencia: new Date()
+    fim_vigencia: undefined
   };
   private id!: number;
 
@@ -41,16 +40,30 @@ export class EdicaoComponent implements OnInit {
     }
 
     this.clienteService.buscarCliente(this.id).subscribe((a) => {
-      this.cliente = a;
+      this.cliente = {
+        ...a,
+        inicio_vigencia: a.inicio_vigencia ? new Date(a.inicio_vigencia).toISOString().split('T')[0] : '',
+        fim_vigencia: a.fim_vigencia ? new Date(a.fim_vigencia).toISOString().split('T')[0] : undefined
+      };
     });
   }
 
   salvarCliente() {
-    if(!this.cliente) return;
+    if (!this.cliente.nome || !this.cliente.id_usuario || !this.cliente.inicio_vigencia) {
+      alert('Por favor, preencha todos os campos obrigatórios!');
+      return;
+    }
 
-    this.clienteService.atualizarCliente(this.id, this.cliente).subscribe((a) => {
+    const clienteParaEnviar = {
+      ...this.cliente,
+      id_usuario: Number(this.cliente.id_usuario),
+      inicio_vigencia: new Date(this.cliente.inicio_vigencia),
+      fim_vigencia: this.cliente.fim_vigencia ? new Date(this.cliente.fim_vigencia) : undefined
+    };
+
+    this.clienteService.atualizarCliente(this.id, clienteParaEnviar).subscribe(() => {
       this.router.navigate(['/listagem']);
-    })
+    });
   }
 
 }

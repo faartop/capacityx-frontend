@@ -3,6 +3,6 @@ export interface Cliente {
     id_usuario: number;
     nome: string;
     status: boolean
-    inicio_vigencia: Date;
-    fim_vigencia?: Date;
+    inicio_vigencia: Date | string;
+    fim_vigencia?: Date | string;
 }
