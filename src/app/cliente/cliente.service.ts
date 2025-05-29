@@ -12,8 +12,27 @@ export class ClienteService {
 
   constructor(private http: HttpClient) { }
 
-  listarClientes(): Observable<Cliente[]> {
-    return this.http.get<Cliente[]>(this.apiURL);
+  listarClientes(
+    nome?: string,
+    fim_vigencia: 'null' | 'notNull' | 'all' = 'all',
+    direction: 'asc' | 'desc' = 'asc'
+  ): Observable<Cliente[]> {
+
+    const params: any = {};
+
+    if (nome) {
+      params.nome = nome;
+    }
+
+    if (fim_vigencia && fim_vigencia !== 'all') {
+      params.fim_vigencia = fim_vigencia;
+    }
+
+    if (direction) {
+      params.direction = direction;
+    }
+
+    return this.http.get<Cliente[]>(this.apiURL, { params });
   }
 
   cadastrarClientes(cliente: Cliente): Observable<Cliente> {

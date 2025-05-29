@@ -1,16 +1,14 @@
 import { Routes } from '@angular/router';
-import { ListagemComponent } from './cliente/listagem/listagem.component';
-import { CadastroComponent } from './cliente/cadastro/cadastro.component';
-import { EdicaoComponent } from './cliente/edicao/edicao.component';
+import { ListagemComponent as ClienteListagemComponent } from './cliente/listagem/listagem.component';
+import { CadastroComponent as ClienteCadastroComponent } from './cliente/cadastro/cadastro.component';
+import { EdicaoComponent as ClienteEdicaoComponent } from './cliente/edicao/edicao.component';
 
 export const routes: Routes = [
 
-  { path: '', redirectTo: 'listagem', pathMatch: 'full' },
+  { path: '', redirectTo: 'cliente/listagem', pathMatch: 'full' },
 
-  { path: 'listagem', component: ListagemComponent },
-
-  { path: 'cadastro', component: CadastroComponent },
-
-  { path: 'edicao/:id', component: EdicaoComponent }
+  { path: 'cliente/listagem', component: ClienteListagemComponent },
+  { path: 'cliente/cadastro', component: ClienteCadastroComponent },
+  { path: 'cliente/edicao/:id', component: ClienteEdicaoComponent }
 
 ];

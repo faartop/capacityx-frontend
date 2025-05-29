@@ -1,5 +1,5 @@
 
-const validaStatus = (date1: string | Date, date2?: string | Date): boolean => {
+export const validaStatus = (date1: string | Date, date2?: string | Date): boolean => {
   const hoje = new Date();
   hoje.setHours(0, 0, 0, 0);
 

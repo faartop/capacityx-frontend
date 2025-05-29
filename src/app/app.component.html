@@ -1,2 +1,9 @@
-
-<router-outlet />
+<div class="d-flex">
+  <app-sidebar [isSidebarOpen]="isSidebarOpen"></app-sidebar>
+  <div class="main-content flex-grow-1">
+    <app-header (sidebarToggle)="toggleSidebar()"></app-header>
+    <main class="container py-3">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

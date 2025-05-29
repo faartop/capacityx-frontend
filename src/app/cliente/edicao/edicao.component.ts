@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import { ClienteService } from '../cliente.service';
 import { Cliente } from '../cliente.model';
+import { validaStatus } from '../../utils/globais';
 
 
 @Component({
@@ -15,7 +16,6 @@ import { Cliente } from '../cliente.model';
 export class EdicaoComponent implements OnInit {
 
   cliente: Cliente = {
-    id_usuario: 0,
     nome: '',
     status: false,
     inicio_vigencia: new Date(),
@@ -50,7 +50,7 @@ export class EdicaoComponent implements OnInit {
   }
 
   salvarCliente() {
-    if (!this.cliente.nome || !this.cliente.id_usuario || !this.cliente.inicio_vigencia) {
+    if (!this.cliente.nome || !this.cliente.inicio_vigencia) {
       alert('Por favor, preencha todos os campos obrigatórios!');
       return;
     }
@@ -59,14 +59,13 @@ export class EdicaoComponent implements OnInit {
 
     const clienteParaEnviar = {
       ...this.cliente,
-      id_usuario: Number(this.cliente.id_usuario),
       inicio_vigencia: new Date(this.cliente.inicio_vigencia),
       fim_vigencia: this.cliente.fim_vigencia ? new Date(this.cliente.fim_vigencia) : undefined,
       status: status
     };
 
     this.clienteService.atualizarCliente(this.id, clienteParaEnviar).subscribe(() => {
-      this.router.navigate(['/listagem']);
+      this.router.navigate(['/cliente/listagem']);
     });
   }
 
