@@ -1,0 +1,87 @@
+<div class="container">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="text-primary m-0">Alocações</h1>
+    <a routerLink="/alocacao/cadastro" class="btn btn-success">
+      <i class="bi bi-plus-lg me-1"></i> Nova Alocação
+    </a>
+  </div>
+
+<!--  <div class="d-flex justify-content-between align-items-center mb-3 gap-2">-->
+<!--    <div class="flex-grow-1">-->
+<!--      <input type="month" class="form-control" placeholder="Pesquisar competência..."/>-->
+<!--    </div>-->
+
+<!--    <select class="form-select w-auto">-->
+<!--      <option value=0 disabled>Selecione um usuário</option>-->
+<!--      <option value=1>Arthur</option>-->
+<!--      <option value=2>Gabriel</option>-->
+<!--    </select>-->
+
+<!--    <select class="form-select w-auto">-->
+<!--      <option value=0 disabled>Selecione um cliente</option>-->
+<!--      <option value=1>Softwaresul</option>-->
+<!--      <option value=2>FAG Toledo</option>-->
+<!--    </select>-->
+
+<!--    <select class="form-select w-auto" [(ngModel)]="filtroDirecao">-->
+<!--      <option value="asc">Ascendente</option>-->
+<!--      <option value="desc">Descendente</option>-->
+<!--    </select>-->
+
+<!--    <button class="btn btn-primary" (click)="filtrarAlocacoes()">Buscar</button>-->
+
+<!--    <button class="btn btn-outline-secondary" (click)="toggleView()" title="Alternar visualização">-->
+<!--      <i class="bi" [ngClass]="viewMode === 'gallery' ? 'bi-list' : 'bi-grid'"></i>-->
+<!--    </button>-->
+<!--  </div>-->
+
+  <!-- Visualização de Galeria -->
+  <div class="row g-4" [ngClass]="{'d-none': viewMode === 'list'}">
+    <div class="col-12 col-md-6 col-lg-4" *ngFor="let alocacao of alocacoes">
+      <div class="card h-100 shadow-sm border-0">
+        <div class="card-body">
+          <h5 class="card-title text-primary">{{ alocacao.competencia | date:'MM/yyyy':'UTC' }}</h5>
+          <p class="mb-1"><strong>Técnico:</strong> <td>{{ alocacao.tecnico?.usuario?.nome }}</p>
+          <p class="mb-1"><strong>Cliente:</strong> <td>{{ alocacao.contrato?.cliente?.nome ? alocacao.contrato?.cliente?.nome : alocacao.item_projeto_categoria?.projeto_categoria?.projeto?.nome }}</p>
+          <p class="mb-1"><strong>Horas alocadas:</strong> <td>{{ alocacao.qtd_hrs_alocadas }}</p>
+          <p class="mb-1"><strong>Horas comerciais alocadas:</strong> <td>{{ alocacao.qtd_hrs_comerciais }}</p>
+          <div class="d-flex gap-2">
+            <a [routerLink]="['/alocacao/edicao', alocacao.id]" class="btn btn-outline-primary btn-sm w-100">
+              <i class="bi bi-pencil-square me-1"></i> Editar
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Visualização de Lista (Tabela) -->
+  <div class="list-view" [ngClass]="{'d-none': viewMode === 'gallery'}">
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th>Competência</th>
+        <th>Técnico</th>
+        <th>Cliente</th>
+        <th>Horas alocadas</th>
+        <th>Horas comerciais</th>
+        <th>Ações</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let alocacao of alocacoes">
+        <td>{{ alocacao.competencia | date:'MM/yyyy':'UTC' }}</td>
+        <td>{{ alocacao.tecnico?.usuario?.nome }}</td>
+        <td>{{ alocacao.contrato?.cliente?.nome ? alocacao.contrato?.cliente?.nome : alocacao.item_projeto_categoria?.projeto_categoria?.projeto?.nome }}</td>
+        <td>{{ alocacao.qtd_hrs_alocadas }}</td>
+        <td>{{ alocacao.qtd_hrs_comerciais }}</td>
+        <td>
+          <a [routerLink]="['/alocacao/edicao', alocacao.id]" class="btn btn-outline-primary btn-sm">
+            <i class="bi bi-pencil-square me-1"></i> Editar
+          </a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

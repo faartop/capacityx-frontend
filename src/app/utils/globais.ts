@@ -16,3 +16,7 @@ export const validaStatus = (date1: string | Date, date2?: string | Date): boole
   return !d2 || isNaN(d2.getTime()) || d2 >= hoje;
 };
 
+export const usuarioAtivo = (): number => {
+  return 2
+}
+

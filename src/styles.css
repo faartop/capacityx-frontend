@@ -1,18 +1,21 @@
 .main-content {
   margin-left: 250px;
   width: calc(100% - 250px);
+  margin-top: 70px;
 }
 
 @media (max-width: 768px) {
   .main-content {
-    margin-left: 200px;
-    width: calc(100% - 200px);
+    margin-left: 0;
+    width: 100%;
+    margin-top: 60px;
   }
 }
 
 @media (max-width: 576px) {
   .main-content {
-    margin-left: 150px;
-    width: calc(100% - 150px);
+    margin-left: 0;
+    width: 100%;
+    margin-top: 60px;
   }
 }

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Cliente } from '../cliente.model';
-import { ClienteService } from '../cliente.service';
+import { Alocacao } from '../alocacao.model';
+import { AlocacaoService } from '../alocacao.service';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -13,32 +13,36 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './listagem.component.css'
 })
 export class ListagemComponent implements OnInit {
-  clientes: Cliente[] = [];
+  alocacoes: Alocacao[] = [];
   viewMode: 'gallery' | 'list' = 'list';
   isSidebarOpen = false;
 
-  filtroPesquisa: string = '';
-  filtroFimVigencia: 'true' | 'false' | 'all' = 'all';
+  competencia: Date | undefined = undefined;
+  id_tecnico: number | undefined = undefined;
+  id_contrato: number | undefined = undefined;
+  id_item_projeto_categoria: number | undefined = undefined;
   filtroDirecao: 'asc' | 'desc' = 'asc';
 
-  constructor(private clienteService: ClienteService) {}
+  constructor(private alocacaoService: AlocacaoService) {}
 
   ngOnInit() {
-    this.carregarClientes();
+    this.carregarAlocacoes();
   }
 
-  carregarClientes() {
-    this.clienteService.listarClientes(
-      this.filtroPesquisa,
-      this.filtroFimVigencia,
+  carregarAlocacoes() {
+    this.alocacaoService.listarAlocacoes(
+      this.competencia,
+      this.id_tecnico,
+      this.id_contrato,
+      this.id_item_projeto_categoria,
       this.filtroDirecao
     ).subscribe((res) => {
-      this.clientes = res;
+      this.alocacoes = res;
     });
   }
 
-  filtrarClientes() {
-    this.carregarClientes();
+  filtrarAlocacoes() {
+    this.carregarAlocacoes();
   }
 
   toggleView() {

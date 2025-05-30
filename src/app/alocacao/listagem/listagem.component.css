@@ -1,0 +1,74 @@
+:root {
+  --bg-color: #ffffff;
+  --text-color: #000000;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-color: #1e1e1e;
+    --text-color: #ffffff;
+  }
+}
+
+.list-view table {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.list-view th,
+.list-view td {
+  vertical-align: middle;
+}
+
+.list-view th:nth-child(1),
+.list-view td:nth-child(1) {
+  text-align: left;
+}
+
+.list-view th:nth-child(2),
+.list-view td:nth-child(2) {
+  text-align: left;
+}
+
+.list-view th:nth-child(3),
+.list-view td:nth-child(3) {
+  text-align: left;
+}
+
+.list-view th:nth-child(4),
+.list-view td:nth-child(4) {
+  text-align: center;
+}
+
+.list-view th:nth-child(5),
+.list-view td:nth-child(5) {
+  text-align: center;
+}
+
+.list-view th:nth-child(6),
+.list-view td:nth-child(6) {
+  text-align: center;
+}
+
+.list-view .table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.list-view .table-hover tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.badge-fixed-width {
+  width: 60px;
+  display: inline-block;
+  text-align: center;
+}
+
+.bg-success-dark {
+  background-color: #198754 !important;
+}
+
+.bg-gray {
+  background-color: #6c757d !important;
+}

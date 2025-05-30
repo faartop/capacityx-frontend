@@ -1,11 +1,10 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-header',
-  imports: [ CommonModule, RouterLink, FormsModule ],
+  imports: [ CommonModule, FormsModule ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })

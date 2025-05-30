@@ -14,7 +14,7 @@ export class ClienteService {
 
   listarClientes(
     nome?: string,
-    status: 'true' | 'false' | 'all' = 'all',
+    fim_vigencia: 'null' | 'notNull' | 'all' = 'all',
     direction: 'asc' | 'desc' = 'asc'
   ): Observable<Cliente[]> {
 
@@ -24,8 +24,8 @@ export class ClienteService {
       params.nome = nome;
     }
 
-    if (status && status !== 'all') {
-      params.status = status;
+    if (fim_vigencia && fim_vigencia !== 'all') {
+      params.fim_vigencia = fim_vigencia;
     }
 
     if (direction) {

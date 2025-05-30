@@ -18,7 +18,7 @@ export class ListagemComponent implements OnInit {
   isSidebarOpen = false;
 
   filtroPesquisa: string = '';
-  filtroFimVigencia: 'true' | 'false' | 'all' = 'all';
+  filtroFimVigencia: 'null' | 'notNull' | 'all' = 'all';
   filtroDirecao: 'asc' | 'desc' = 'asc';
 
   constructor(private clienteService: ClienteService) {}

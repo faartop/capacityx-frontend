@@ -1,0 +1,55 @@
+<div class="container">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="text-primary m-0">Cadastro de Alocação</h1>
+  </div>
+  <div class="card shadow-sm border-0 form-container">
+    <div class="card-body p-4">
+      <form (ngSubmit)="salvarAlocacao()">
+        <div class="mb-3 row">
+          <label for="inputNome" class="col-sm-3 col-form-label">Nome</label>
+          <div class="col-sm-9">
+            <input type="month" class="form-control" id="inputNome" name="competencia" [(ngModel)]="alocacao.competencia" required>
+          </div>
+        </div>
+
+        <div class="mb-3 row">
+          <label for="inputNome" class="col-sm-3 col-form-label">Técnico</label>
+          <div class="col-sm-9">
+            <select class="form-select" id="form-select" name="id_tecnico" [(ngModel)]="alocacao.id_tecnico" required>
+              <option value=0 disabled>Selecione o técnico</option>
+              <option value=1>Arthur</option>
+              <option value=2>Gabriel</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="mb-3 row">
+          <label for="inputNome" class="col-sm-3 col-form-label">Cliente</label>
+          <div class="col-sm-9">
+            <select class="form-select" id="form-select" name="id_contrato" [(ngModel)]="alocacao.id_contrato" required>
+              <option value=0 disabled>Selecione o cliente</option>
+              <option value=1>Softwaresul</option>
+              <option value=2>FAG Toledo</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="mb-3 row">
+          <label for="inputNome" class="col-sm-3 col-form-label">Horas alocadas</label>
+          <div class="col-sm-9">
+            <input type="number" class="form-control" id="inputNome" name="qtd_hrs_alocadas" [(ngModel)]="alocacao.qtd_hrs_alocadas" required>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-end gap-2 mt-4">
+          <button type="submit" class="btn btn-success">
+            <i class="bi bi-check-circle me-1"></i> Salvar
+          </button>
+          <a routerLink="/alocacao/listagem" class="btn btn-outline-secondary">
+            <i class="bi bi-x-circle me-1"></i> Cancelar
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
