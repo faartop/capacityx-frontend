@@ -1,0 +1,42 @@
+<div class="container">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="text-primary m-0">Cadastro de Categria Pai</h1>
+  </div>
+  <div class="card shadow-sm border-0 form-container">
+    <div class="card-body p-4">
+      <form (ngSubmit)="salvarCategoriaPai()">
+        <div class="mb-3 row">
+          <label for="inputNome" class="col-sm-3 col-form-label">Descrição</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="inputNome" name="descricao" [(ngModel)]="categoriapai.descricao" required>
+          </div>
+        </div>
+
+        <div class="mb-3 row">
+          <label for="inputInicio" class="col-sm-3 col-form-label">Início Vigência</label>
+          <div class="col-sm-9">
+            <input type="date" class="form-control" id="inputInicio" name="inicio_vigencia"
+                   [(ngModel)]="categoriapai.inicio_vigencia" required>
+          </div>
+        </div>
+
+        <div class="mb-3 row">
+          <label for="inputFim" class="col-sm-3 col-form-label">Fim Vigência</label>
+          <div class="col-sm-9">
+            <input type="date" class="form-control" id="inputFim" name="fim_vigencia"
+                   [(ngModel)]="categoriapai.fim_vigencia">
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-end gap-2 mt-4">
+          <button type="submit" class="btn btn-success">
+            <i class="bi bi-check-circle me-1"></i> Salvar
+          </button>
+          <a routerLink="/categoria-pai/listagem" class="btn btn-outline-secondary">
+            <i class="bi bi-x-circle me-1"></i> Cancelar
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

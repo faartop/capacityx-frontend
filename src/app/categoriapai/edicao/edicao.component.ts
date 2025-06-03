@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import  { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { ClienteService } from '../cliente.service';
-import { Cliente } from '../cliente.model';
+import { CategoriaPaiService } from '../categoriapai.service';
+import { CategoriaPai } from '../categoriapai.model';
 import { validaStatus } from '../../utils/globais';
 
 
@@ -15,33 +15,32 @@ import { validaStatus } from '../../utils/globais';
 })
 export class EdicaoComponent implements OnInit {
 
-  cliente: Cliente = {
-    nome: '',
-    status: false,
+  categoriapai: CategoriaPai = {
+    descricao: '',
     inicio_vigencia: new Date(),
-    fim_vigencia: undefined
+    fim_vigencia: undefined,
   };
   private id!: number;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private clienteService: ClienteService
+    private categoriapaiService: CategoriaPaiService,
   ) {}
 
   ngOnInit() {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
 
-    this.carregarCliente();
+    this.carregarCategoriaPai();
   }
 
-  carregarCliente() {
+  carregarCategoriaPai() {
     if(!this.id || isNaN(this.id)) {
       this.router.navigate(['/listagem']);
     }
 
-    this.clienteService.buscarCliente(this.id).subscribe((a) => {
-      this.cliente = {
+    this.categoriapaiService.buscarCategoriaPai(this.id).subscribe((a) => {
+      this.categoriapai = {
         ...a,
         inicio_vigencia: a.inicio_vigencia ? new Date(a.inicio_vigencia).toISOString().split('T')[0] : '',
         fim_vigencia: a.fim_vigencia ? new Date(a.fim_vigencia).toISOString().split('T')[0] : undefined
@@ -49,23 +48,19 @@ export class EdicaoComponent implements OnInit {
     });
   }
 
-  salvarCliente() {
-    if (!this.cliente.nome || !this.cliente.inicio_vigencia) {
-      alert('Por favor, preencha todos os campos obrigatórios!');
-      return;
-    }
+  salvarCategoriaPai() {
 
-    const status = validaStatus(this.cliente.inicio_vigencia, this.cliente.fim_vigencia);
+    const status = validaStatus(this.categoriapai.inicio_vigencia, this.categoriapai.fim_vigencia);
 
-    const clienteParaEnviar = {
-      ...this.cliente,
-      inicio_vigencia: new Date(this.cliente.inicio_vigencia),
-      fim_vigencia: this.cliente.fim_vigencia ? new Date(this.cliente.fim_vigencia) : undefined,
+    const categoriapaiParaEnviar = {
+      ...this.categoriapai,
+      inicio_vigencia: new Date(this.categoriapai.inicio_vigencia),
+      fim_vigencia: this.categoriapai.fim_vigencia ? new Date(this.categoriapai.fim_vigencia) : undefined,
       status: status
     };
 
-    this.clienteService.atualizarCliente(this.id, clienteParaEnviar).subscribe(() => {
-      this.router.navigate(['/cliente/listagem']);
+    this.categoriapaiService.atualizarCategoriaPai(this.id, categoriapaiParaEnviar).subscribe(() => {
+      this.router.navigate(['/categoria-pai/listagem']);
     });
   }
 

@@ -1,0 +1,90 @@
+<div class="container">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="text-primary m-0">Contratos de Trabalho</h1>
+    <a routerLink="/contrato-trabalho/cadastro" class="btn btn-success">
+      <i class="bi bi-plus-lg me-1"></i> Novo Cadastro
+    </a>
+  </div>
+
+  <div class="d-flex justify-content-between align-items-center mb-3 gap-2">
+    <div class="flex-grow-1">
+      <input type="text" class="form-control" placeholder="Pesquisar contrato..." [(ngModel)]="filtroPesquisa"/>
+    </div>
+
+    <select class="form-select w-auto" [(ngModel)]="filtroFimVigencia">
+      <option value="all">Todos</option>
+      <option value="true">Ativos</option>
+      <option value="false">Inativos</option>
+    </select>
+
+    <select class="form-select w-auto" [(ngModel)]="filtroDirecao">
+      <option value="asc">Ascendente</option>
+      <option value="desc">Descendente</option>
+    </select>
+
+    <button class="btn btn-primary" (click)="filtrarContratosTrabalho()">Buscar</button>
+
+    <button class="btn btn-outline-secondary" (click)="toggleView()" title="Alternar visualização">
+      <i class="bi" [ngClass]="viewMode === 'gallery' ? 'bi-list' : 'bi-grid'"></i>
+    </button>
+  </div>
+
+  <!-- Visualização de Galeria -->
+  <div class="row g-4" [ngClass]="{'d-none': viewMode === 'list'}">
+    <div class="col-12 col-md-6 col-lg-4" *ngFor="let contratotrabalho of contratostrabalho">
+      <div class="card h-100 shadow-sm border-0">
+        <div class="card-body">
+          <h5 class="card-title text-primary">{{ contratotrabalho.nivel_tecnico }}</h5>
+          <p class="mb-1">
+            <strong>Status: </strong>
+            <span class="badge badge-fixed-width" [ngClass]="contratotrabalho.status ? 'bg-success-dark' : 'bg-gray'">
+              {{ contratotrabalho.status ? 'Ativo' : 'Inativo' }}
+            </span>
+          </p>
+          <p class="mb-1"><strong>Carga Horária:</strong> <td>{{ contratotrabalho.carga_horaria }}h</p>
+          <p class="mb-1"><strong>Início Vigência:</strong> <td>{{ contratotrabalho.inicio_vigencia | date:'dd/MM/yyyy':'UTC' }}</p>
+          <p class="mb-1"><strong>Fim Vigência:</strong> <td>{{ contratotrabalho.fim_vigencia | date:'dd/MM/yyyy':'UTC' }}</p>
+          <div class="d-flex gap-2">
+            <a [routerLink]="['/contrato-trabalho/edicao', contratotrabalho.id]" class="btn btn-outline-primary btn-sm w-100">
+              <i class="bi bi-pencil-square me-1"></i> Editar
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Visualização de Lista (Tabela) -->
+  <div class="list-view" [ngClass]="{'d-none': viewMode === 'gallery'}">
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th>Nivel Técnico</th>
+        <th>Status</th>
+        <th>Carga Horária</th>
+        <th>Início Vigência</th>
+        <th>Fim Vigência</th>
+        <th>Ações</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let contratotrabalho of contratostrabalho">
+        <td>{{ contratotrabalho.nivel_tecnico }}</td>
+        <td>
+            <span class="badge badge-fixed-width" [ngClass]="contratotrabalho.status ? 'bg-success-dark' : 'bg-gray'">
+              {{ contratotrabalho.status ? 'Ativo' : 'Inativo' }}
+            </span>
+        </td>
+        <td>{{ contratotrabalho.carga_horaria }}h</td>
+        <td>{{ contratotrabalho.inicio_vigencia | date:'dd/MM/yyyy':'UTC' }}</td>
+        <td>{{ contratotrabalho.fim_vigencia | date:'dd/MM/yyyy':'UTC' }}</td>
+        <td>
+          <a [routerLink]="['/contrato-trabalho/edicao', contratotrabalho.id]" class="btn btn-outline-primary btn-sm">
+            <i class="bi bi-pencil-square me-1"></i> Editar
+          </a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
