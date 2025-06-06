@@ -20,19 +20,6 @@
   vertical-align: middle;
 }
 
-.btn-sm {
-  padding: 0.25rem 0.5rem;
-  font-size: 0.875rem;
-}
-
-.bi-trash {
-  color: #dc3545;
-}
-
-.btn-outline-danger:hover .bi-trash {
-  color: white;
-}
-
 .list-view th:nth-child(1),
 .list-view td:nth-child(1) {
   text-align: left;
@@ -40,7 +27,7 @@
 
 .list-view th:nth-child(2),
 .list-view td:nth-child(2) {
-  text-align: center;
+  text-align: left;
 }
 
 .list-view th:nth-child(3),
@@ -50,21 +37,16 @@
 
 .list-view th:nth-child(4),
 .list-view td:nth-child(4) {
-  text-align: right;
+  text-align: center;
 }
 
 .list-view th:nth-child(5),
 .list-view td:nth-child(5) {
-  text-align: right;
+  text-align: center;
 }
 
 .list-view th:nth-child(6),
 .list-view td:nth-child(6) {
-  text-align: right;
-}
-
-.list-view th:nth-child(7),
-.list-view td:nth-child(7) {
   text-align: center;
 }
 

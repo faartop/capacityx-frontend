@@ -43,7 +43,7 @@
           </p>
           <p class="mb-1"><strong>E-mail:</strong> {{ usuario.email }}</p>
           <p class="mb-1"><strong>Contrato de trabalho:</strong> {{ usuario.contrato_trabalho?.nivel_tecnico }}</p>
-          <p class="mb-1"><strong>Nível de acesso:</strong> {{ usuario.nivel_acesso }}</p>
+          <p class="mb-1"><strong>Nível de acesso:</strong> {{ nivelAcessoDescricao(usuario.nivel_acesso) }}</p>
           <p class="mb-1"><strong>Início Vigência:</strong> {{ usuario.inicio_vigencia | date:'dd/MM/yyyy':'UTC' }}</p>
           <p class="mb-1"><strong>Fim Vigência:</strong> {{ usuario.fim_vigencia | date:'dd/MM/yyyy':'UTC' }}</p>
           <div class="d-flex gap-2">
@@ -84,7 +84,7 @@
         </td>
         <td>{{ usuario.email }}</td>
         <td>{{ usuario.contrato_trabalho?.nivel_tecnico }}</td>
-        <td>{{ usuario.nivel_acesso }}</td>
+        <td>{{ nivelAcessoDescricao(usuario.nivel_acesso) }}</td>
         <td>{{ usuario.inicio_vigencia | date:'dd/MM/yyyy':'UTC' }}</td>
         <td>{{ usuario.fim_vigencia | date:'dd/MM/yyyy':'UTC' }}</td>
         <td>

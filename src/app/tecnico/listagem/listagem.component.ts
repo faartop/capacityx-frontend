@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Cliente } from '../cliente.model';
-import { ClienteService } from '../cliente.service';
+import { Tecnico } from '../tecnico.model';
+import { TecnicoService } from '../tecnico.service';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -13,32 +13,40 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './listagem.component.css'
 })
 export class ListagemComponent implements OnInit {
-  clientes: Cliente[] = [];
+  tecnicos: Tecnico[] = [];
   viewMode: 'gallery' | 'list' = 'list';
   isSidebarOpen = false;
 
-  filtroPesquisa: string = '';
-  filtroFimVigencia: 'null' | 'notNull' | 'all' = 'all';
+  filtroFimVigencia: 'true' | 'false' | 'all' = 'all';
   filtroDirecao: 'asc' | 'desc' = 'asc';
 
-  constructor(private clienteService: ClienteService) {}
+  constructor(private tecnicoService: TecnicoService) {}
 
   ngOnInit() {
-    this.carregarClientes();
+    this.carregarTecnicos();
   }
 
-  carregarClientes() {
-    this.clienteService.listarClientes(
-      this.filtroPesquisa,
+  carregarTecnicos() {
+    this.tecnicoService.listarTecnicos(
       this.filtroFimVigencia,
       this.filtroDirecao
     ).subscribe((res) => {
-      this.clientes = res;
+      this.tecnicos = res;
     });
   }
 
-  filtrarClientes() {
-    this.carregarClientes();
+  filtrarTecnicos() {
+    this.carregarTecnicos();
+  }
+
+  excluirTecnico(id: number | undefined) {
+    if (id === undefined) {
+      return;
+    }
+
+    this.tecnicoService.deletarTecnico(id).subscribe(() => {
+      this.carregarTecnicos();
+    });
   }
 
   toggleView() {

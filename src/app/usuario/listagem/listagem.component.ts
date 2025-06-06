@@ -41,6 +41,18 @@ export class ListagemComponent implements OnInit {
     this.carregarUsuarios();
   }
 
+  nivelAcessoDescricao(nivel: number) {
+    const niveis: Record<number, string> = {
+      0: 'Técnico',
+      1: 'Coordenador',
+      2: 'Diretor',
+      3: 'RH',
+      4: 'Administrador'
+    };
+
+    return niveis[nivel] || 'Desconhecido';
+  }
+
   excluirUsuario(id: number | undefined) {
     if (id === undefined) {
       return;

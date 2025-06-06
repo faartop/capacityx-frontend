@@ -1,0 +1,87 @@
+<div class="container">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="text-primary m-0">Categorias</h1>
+    <a routerLink="/categoria/cadastro" class="btn btn-success">
+      <i class="bi bi-plus-lg me-1"></i> Novo Categoria
+    </a>
+  </div>
+
+  <div class="d-flex justify-content-between align-items-center mb-3 gap-2">
+    <div class="flex-grow-1">
+      <input type="text" class="form-control" placeholder="Pesquisar categoria..." [(ngModel)]="filtroPesquisa"/>
+    </div>
+
+    <select class="form-select w-auto" [(ngModel)]="filtroFimVigencia">
+      <option value="all">Todos</option>
+      <option value="true">Ativos</option>
+      <option value="false">Inativos</option>
+    </select>
+
+    <select class="form-select w-auto" [(ngModel)]="filtroDirecao">
+      <option value="asc">Ascendente</option>
+      <option value="desc">Descendente</option>
+    </select>
+
+    <button class="btn btn-primary" (click)="filtrarCategorias()">Buscar</button>
+
+    <button class="btn btn-outline-secondary" (click)="toggleView()" title="Alternar visualização">
+      <i class="bi" [ngClass]="viewMode === 'gallery' ? 'bi-list' : 'bi-grid'"></i>
+    </button>
+  </div>
+
+  <!-- Visualização de Galeria -->
+  <div class="row g-4" [ngClass]="{'d-none': viewMode === 'list'}">
+    <div class="col-12 col-md-6 col-lg-4" *ngFor="let categoria of categorias">
+      <div class="card h-100 shadow-sm border-0">
+        <div class="card-body">
+          <h5 class="card-title text-primary">{{ categoria.descricao }}</h5>
+          <p class="mb-1"><strong>E-mail:</strong> {{ categoria.categoria_pai?.descricao }}</p>
+          <p class="mb-1"><strong>Contrato de trabalho:</strong> {{ categoria.responsavel?.nome }}</p>
+          <p class="mb-1"><strong>Início Vigência:</strong> {{ categoria.inicio_vigencia | date:'dd/MM/yyyy':'UTC' }}</p>
+          <p class="mb-1"><strong>Fim Vigência:</strong> {{ categoria.fim_vigencia | date:'dd/MM/yyyy':'UTC' }}</p>
+          <div class="d-flex gap-2">
+            <a [routerLink]="['/categoria/edicao', categoria.id]" class="btn btn-outline-primary btn-sm w-100">
+              <i class="bi bi-pencil-square me-1"></i> Editar
+            </a>
+            <button class="btn btn-outline-danger btn-sm w-100" (click)="excluirCategoria(categoria.id)">
+              <i class="bi bi-trash me-1"></i> Excluir
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Visualização de Lista (Tabela) -->
+  <div class="list-view" [ngClass]="{'d-none': viewMode === 'gallery'}">
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Categoria Pai</th>
+        <th>Responsavel</th>
+        <th>Início Vigência</th>
+        <th>Fim Vigência</th>
+        <th>Ações</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let categoria of categorias">
+        <td>{{ categoria.descricao }}</td>
+        <td>{{ categoria.categoria_pai?.descricao }}</td>
+        <td>{{ categoria.responsavel?.nome }}</td>
+        <td>{{ categoria.inicio_vigencia | date:'dd/MM/yyyy':'UTC' }}</td>
+        <td>{{ categoria.fim_vigencia | date:'dd/MM/yyyy':'UTC' }}</td>
+        <td>
+          <a [routerLink]="['/categoria/edicao', categoria.id]" class="btn btn-outline-primary btn-sm">
+            <i class="bi bi-pencil-square"></i>
+          </a>
+          <button class="btn btn-outline-danger btn-sm ms-2" (click)="excluirCategoria(categoria.id)">
+            <i class="bi bi-trash"></i>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -43,6 +43,16 @@ export class ListagemComponent implements OnInit {
     this.carregarContratosTrabalho();
   }
 
+  excluirContratoTrabalho(id: number | undefined) {
+    if (id === undefined) {
+      return;
+    }
+
+    this.contratotrabalhoService.deletarContratoTrabalho(id).subscribe(() => {
+      this.carregarContratosTrabalho();
+    });
+  }
+
   toggleView() {
     this.viewMode = this.viewMode === 'gallery' ? 'list' : 'gallery';
   }

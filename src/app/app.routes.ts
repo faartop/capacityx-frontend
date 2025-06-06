@@ -14,6 +14,13 @@ import { EdicaoComponent as UsuarioEdicaoComponent } from './usuario/edicao/edic
 import { ListagemComponent as CategoriaPaiListagemComponent } from './categoriapai/listagem/listagem.component';
 import { CadastroComponent as CategoriaPaiCadastroComponent } from './categoriapai/cadastro/cadastro.component';
 import { EdicaoComponent as CategoriaPaiEdicaoComponent } from './categoriapai/edicao/edicao.component';
+import { ListagemComponent as CategoriaListagemComponent } from './categoria/listagem/listagem.component';
+import { CadastroComponent as CategoriaCadastroComponent } from './categoria/cadastro/cadastro.component';
+import { EdicaoComponent as CategoriaEdicaoComponent } from './categoria/edicao/edicao.component';
+import { ListagemComponent as TecnicoListagemComponent } from './tecnico/listagem/listagem.component';
+import { CadastroComponent as TecnicoCadastroComponent } from './tecnico/cadastro/cadastro.component';
+import { EdicaoComponent as TecnicoEdicaoComponent } from './tecnico/edicao/edicao.component';
+import { HomeComponent } from './home/home.component';
 
 
 export const routes: Routes = [
@@ -38,6 +45,16 @@ export const routes: Routes = [
 
   { path: 'categoria-pai/listagem', component: CategoriaPaiListagemComponent },
   { path: 'categoria-pai/cadastro', component: CategoriaPaiCadastroComponent },
-  { path: 'categoria-pai/edicao/:id', component: CategoriaPaiEdicaoComponent }
+  { path: 'categoria-pai/edicao/:id', component: CategoriaPaiEdicaoComponent },
+
+  { path: 'categoria/listagem', component: CategoriaListagemComponent },
+  { path: 'categoria/cadastro', component: CategoriaCadastroComponent },
+  { path: 'categoria/edicao/:id', component: CategoriaEdicaoComponent },
+
+  { path: 'tecnico/listagem', component: TecnicoListagemComponent },
+  { path: 'tecnico/cadastro', component: TecnicoCadastroComponent },
+  { path: 'tecnico/edicao/:id', component: TecnicoEdicaoComponent },
+
+  { path: 'home', component: HomeComponent }
 
 ];

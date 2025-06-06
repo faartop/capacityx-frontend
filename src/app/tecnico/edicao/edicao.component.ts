@@ -1,9 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import  { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import {ActivatedRoute, Router, RouterLink} from '@angular/router';
-import { ClienteService } from '../cliente.service';
-import { Cliente } from '../cliente.model';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { TecnicoService } from '../tecnico.service';
+import { Tecnico } from '../tecnico.model';
+import { Usuario } from '../../usuario/usuario.model';
+import { UsuarioService } from '../../usuario/usuario.service';
+import { Categoria } from '../../categoria/categoria.model';
+import { CategoriaService } from '../../categoria/categoria.service';
 import { validaStatus } from '../../utils/globais';
 
 
@@ -15,33 +19,58 @@ import { validaStatus } from '../../utils/globais';
 })
 export class EdicaoComponent implements OnInit {
 
-  cliente: Cliente = {
-    nome: '',
-    status: false,
+  tecnico: Tecnico = {
+    id_usuario: 0,
+    id_categoria: 0,
+    know_how: 0,
     inicio_vigencia: new Date(),
-    fim_vigencia: undefined
+    fim_vigencia: undefined,
+    status: true,
   };
+  usuarios: Usuario[] = []
+  categorias: Categoria[] = []
   private id!: number;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private clienteService: ClienteService
+    private tecnicoService: TecnicoService,
+    private categoriaService: CategoriaService,
+    private usuarioService: UsuarioService,
   ) {}
 
   ngOnInit() {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
 
-    this.carregarCliente();
+    this.carregarTecnico();
+
+    this.carregarCategorias();
+
+    this.carregarUsuarios();
   }
 
-  carregarCliente() {
+  async carregarCategorias() {
+    this.categoriaService.listarCategorias(
+    ).subscribe((res) => {
+      this.categorias = res;
+    });
+  }
+
+  async carregarUsuarios() {
+    this.usuarioService.listarUsuarios(
+      undefined, 'true'
+    ).subscribe((res) => {
+      this.usuarios = res;
+    });
+  }
+
+  carregarTecnico() {
     if(!this.id || isNaN(this.id)) {
       this.router.navigate(['/listagem']);
     }
 
-    this.clienteService.buscarCliente(this.id).subscribe((a) => {
-      this.cliente = {
+    this.tecnicoService.buscarTecnico(this.id).subscribe((a) => {
+      this.tecnico = {
         ...a,
         inicio_vigencia: a.inicio_vigencia ? new Date(a.inicio_vigencia).toISOString().split('T')[0] : '',
         fim_vigencia: a.fim_vigencia ? new Date(a.fim_vigencia).toISOString().split('T')[0] : undefined
@@ -49,23 +78,22 @@ export class EdicaoComponent implements OnInit {
     });
   }
 
-  salvarCliente() {
-    if (!this.cliente.nome || !this.cliente.inicio_vigencia) {
-      alert('Por favor, preencha todos os campos obrigatórios!');
-      return;
-    }
+  salvarTecnico() {
 
-    const status = validaStatus(this.cliente.inicio_vigencia, this.cliente.fim_vigencia);
+    const status = validaStatus(this.tecnico.inicio_vigencia, this.tecnico.fim_vigencia)
 
-    const clienteParaEnviar = {
-      ...this.cliente,
-      inicio_vigencia: new Date(this.cliente.inicio_vigencia),
-      fim_vigencia: this.cliente.fim_vigencia ? new Date(this.cliente.fim_vigencia) : undefined,
-      status: status
+    const tecnicoParaEnviar = {
+      ...this.tecnico,
+      id_usuario: Number(this.tecnico.id_usuario),
+      id_categoria: Number(this.tecnico.id_categoria),
+      know_how: Number(this.tecnico.know_how),
+      inicio_vigencia: new Date(this.tecnico.inicio_vigencia),
+      fim_vigencia: this.tecnico.fim_vigencia ? new Date(this.tecnico.fim_vigencia) : undefined,
+      status: status,
     };
 
-    this.clienteService.atualizarCliente(this.id, clienteParaEnviar).subscribe(() => {
-      this.router.navigate(['/cliente/listagem']);
+    this.tecnicoService.atualizarTecnico(this.id, tecnicoParaEnviar).subscribe(() => {
+      this.router.navigate(['/tecnico/listagem']);
     });
   }
 

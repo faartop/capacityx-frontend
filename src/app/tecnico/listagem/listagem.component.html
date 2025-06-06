@@ -1,52 +1,57 @@
-<div class="container py-4">
+<div class="container">
   <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1 class="text-primary m-0">Clientes</h1>
-    <a routerLink="/cliente/cadastro" class="btn btn-success">
-      <i class="bi bi-plus-lg me-1"></i> Novo Cliente
+    <h1 class="text-primary m-0">Técnicos</h1>
+    <a routerLink="/tecnico/cadastro" class="btn btn-success">
+      <i class="bi bi-plus-lg me-1"></i> Novo Técnico
     </a>
   </div>
 
-  <div class="d-flex justify-content-between align-items-center mb-3 gap-2">
-    <div class="flex-grow-1">
-      <input type="text" class="form-control" placeholder="Pesquisar cliente..." [(ngModel)]="filtroPesquisa" />
-    </div>
+<!--  <div class="d-flex justify-content-between justify-content-end mb-3 gap-2">-->
+<!--    <div class="flex-grow-1">-->
+<!--      <input type="text" class="form-control" placeholder="Pesquisar tecnico..." [(ngModel)]="filtroPesquisa"/>-->
+<!--    </div>-->
 
-    <select class="form-select w-auto" [(ngModel)]="filtroFimVigencia">
-      <option value="all">Todos</option>
-      <option value="true">Ativos</option>
-      <option value="false">Inativos</option>
-    </select>
+<!--    <select class="form-select w-auto" [(ngModel)]="filtroFimVigencia">-->
+<!--      <option value="all">Todos</option>-->
+<!--      <option value="true">Ativos</option>-->
+<!--      <option value="false">Inativos</option>-->
+<!--    </select>-->
 
-    <select class="form-select w-auto" [(ngModel)]="filtroDirecao">
-      <option value="asc">Ascendente</option>
-      <option value="desc">Descendente</option>
-    </select>
+<!--    <select class="form-select w-auto" [(ngModel)]="filtroDirecao">-->
+<!--      <option value="asc">Ascendente</option>-->
+<!--      <option value="desc">Descendente</option>-->
+<!--    </select>-->
 
-    <button class="btn btn-primary" (click)="filtrarClientes()">Buscar</button>
+<!--    <button class="btn btn-primary" (click)="filtrarTecnicos()">Buscar</button>-->
 
-    <button class="btn btn-outline-secondary" (click)="toggleView()" title="Alternar visualização">
-      <i class="bi" [ngClass]="viewMode === 'gallery' ? 'bi-list' : 'bi-grid'"></i>
-    </button>
-  </div>
+<!--    <button class="btn btn-outline-secondary" (click)="toggleView()" title="Alternar visualização">-->
+<!--      <i class="bi" [ngClass]="viewMode === 'gallery' ? 'bi-list' : 'bi-grid'"></i>-->
+<!--    </button>-->
+<!--  </div>-->
 
   <!-- Visualização de Galeria -->
   <div class="row g-4" [ngClass]="{'d-none': viewMode === 'list'}">
-    <div class="col-12 col-md-6 col-lg-4" *ngFor="let cliente of clientes">
+    <div class="col-12 col-md-6 col-lg-4" *ngFor="let tecnico of tecnicos">
       <div class="card h-100 shadow-sm border-0">
         <div class="card-body">
-          <h5 class="card-title text-primary">{{ cliente.nome }}</h5>
+          <h5 class="card-title text-primary">{{ tecnico.usuario?.nome }}</h5>
           <p class="mb-1">
             <strong>Status: </strong>
-            <span class="badge badge-fixed-width" [ngClass]="cliente.status ? 'bg-success-dark' : 'bg-gray'">
-              {{ cliente.status ? 'Ativo' : 'Inativo' }}
+            <span class="badge badge-fixed-width" [ngClass]="tecnico.status ? 'bg-success-dark' : 'bg-gray'">
+              {{ tecnico.status ? 'Ativo' : 'Inativo' }}
             </span>
           </p>
-          <p class="mb-1"><strong>Início Vigência:</strong> {{ cliente.inicio_vigencia | date:'dd/MM/yyyy':'UTC' }}</p>
-          <p class="mb-1"><strong>Fim Vigência:</strong> {{ cliente.fim_vigencia | date:'dd/MM/yyyy':'UTC' }}</p>
+          <p class="mb-1"><strong>Categoria:</strong> {{ tecnico.categoria?.descricao }}</p>
+          <p class="mb-1"><strong>Know-how:</strong> {{ tecnico.know_how }}</p>
+          <p class="mb-1"><strong>Início Vigência:</strong> {{ tecnico.inicio_vigencia | date:'dd/MM/yyyy':'UTC' }}</p>
+          <p class="mb-1"><strong>Fim Vigência:</strong> {{ tecnico.fim_vigencia | date:'dd/MM/yyyy':'UTC' }}</p>
           <div class="d-flex gap-2">
-            <a [routerLink]="['/cliente/edicao', cliente.id]" class="btn btn-outline-primary btn-sm w-100">
+            <a [routerLink]="['/tecnico/edicao', tecnico.id]" class="btn btn-outline-primary btn-sm w-100">
               <i class="bi bi-pencil-square me-1"></i> Editar
             </a>
+            <button class="btn btn-outline-danger btn-sm w-100" (click)="excluirTecnico(tecnico.id)">
+              <i class="bi bi-trash me-1"></i> Excluir
+            </button>
           </div>
         </div>
       </div>
@@ -60,25 +65,32 @@
       <tr>
         <th>Nome</th>
         <th>Status</th>
+        <th>Categoria</th>
+        <th>Know-how</th>
         <th>Início Vigência</th>
         <th>Fim Vigência</th>
         <th>Ações</th>
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let cliente of clientes">
-        <td>{{ cliente.nome }}</td>
+      <tr *ngFor="let tecnico of tecnicos">
+        <td>{{ tecnico.usuario?.nome }}</td>
         <td>
-            <span class="badge badge-fixed-width" [ngClass]="cliente.status ? 'bg-success-dark' : 'bg-gray'">
-              {{ cliente.status ? 'Ativo' : 'Inativo' }}
+            <span class="badge badge-fixed-width" [ngClass]="tecnico.status ? 'bg-success-dark' : 'bg-gray'">
+              {{ tecnico.status ? 'Ativo' : 'Inativo' }}
             </span>
         </td>
-        <td>{{ cliente.inicio_vigencia | date:'dd/MM/yyyy':'UTC' }}</td>
-        <td>{{ cliente.fim_vigencia | date:'dd/MM/yyyy':'UTC' }}</td>
+        <td>{{ tecnico.categoria?.descricao }}</td>
+        <td>{{ tecnico.know_how }}</td>
+        <td>{{ tecnico.inicio_vigencia | date:'dd/MM/yyyy':'UTC' }}</td>
+        <td>{{ tecnico.fim_vigencia | date:'dd/MM/yyyy':'UTC' }}</td>
         <td>
-          <a [routerLink]="['/cliente/edicao', cliente.id]" class="btn btn-outline-primary btn-sm">
-            <i class="bi bi-pencil-square me-1"></i> Editar
+          <a [routerLink]="['/tecnico/edicao', tecnico.id]" class="btn btn-outline-primary btn-sm">
+            <i class="bi bi-pencil-square"></i>
           </a>
+          <button class="btn btn-outline-danger btn-sm ms-2" (click)="excluirTecnico(tecnico.id)">
+            <i class="bi bi-trash"></i>
+          </button>
         </td>
       </tr>
       </tbody>

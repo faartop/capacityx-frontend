@@ -48,6 +48,9 @@
             <a [routerLink]="['/contrato-trabalho/edicao', contratotrabalho.id]" class="btn btn-outline-primary btn-sm w-100">
               <i class="bi bi-pencil-square me-1"></i> Editar
             </a>
+            <button class="btn btn-outline-danger btn-sm w-100" (click)="excluirContratoTrabalho(contratotrabalho.id)">
+              <i class="bi bi-trash me-1"></i> Excluir
+            </button>
           </div>
         </div>
       </div>
@@ -80,8 +83,11 @@
         <td>{{ contratotrabalho.fim_vigencia | date:'dd/MM/yyyy':'UTC' }}</td>
         <td>
           <a [routerLink]="['/contrato-trabalho/edicao', contratotrabalho.id]" class="btn btn-outline-primary btn-sm">
-            <i class="bi bi-pencil-square me-1"></i> Editar
+            <i class="bi bi-pencil-square"></i>
           </a>
+          <button class="btn btn-outline-danger btn-sm ms-2" (click)="excluirContratoTrabalho(contratotrabalho.id)">
+            <i class="bi bi-trash"></i>
+          </button>
         </td>
       </tr>
       </tbody>

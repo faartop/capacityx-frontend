@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Cliente } from '../cliente.model';
-import { ClienteService } from '../cliente.service';
+import { Categoria } from '../categoria.model';
+import { CategoriaService } from '../categoria.service';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -13,41 +13,41 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './listagem.component.css'
 })
 export class ListagemComponent implements OnInit {
-  clientes: Cliente[] = [];
+  categorias: Categoria[] = [];
   viewMode: 'gallery' | 'list' = 'list';
   isSidebarOpen = false;
 
   filtroPesquisa: string = '';
-  filtroFimVigencia: 'true' | 'false' | 'all' = 'all';
+  filtroFimVigencia: 'null' | 'notNull' | 'all' = 'all';
   filtroDirecao: 'asc' | 'desc' = 'asc';
 
-  constructor(private clienteService: ClienteService) {}
+  constructor(private categoriaService: CategoriaService) {}
 
   ngOnInit() {
-    this.carregarClientes();
+    this.carregarCategorias();
   }
 
-  carregarClientes() {
-    this.clienteService.listarClientes(
+  carregarCategorias() {
+    this.categoriaService.listarCategorias(
       this.filtroPesquisa,
       this.filtroFimVigencia,
       this.filtroDirecao
     ).subscribe((res) => {
-      this.clientes = res;
+      this.categorias = res;
     });
   }
 
-  filtrarClientes() {
-    this.carregarClientes();
+  filtrarCategorias() {
+    this.carregarCategorias();
   }
 
-  excluirCliente(id: number | undefined) {
+  excluirCategoria(id: number | undefined) {
     if (id === undefined) {
       return;
     }
 
-    this.clienteService.deletarCliente(id).subscribe(() => {
-      this.carregarClientes();
+    this.categoriaService.deletarCategoria(id).subscribe(() => {
+      this.carregarCategorias();
     });
   }
 

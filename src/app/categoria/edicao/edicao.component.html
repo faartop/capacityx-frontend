@@ -1,41 +1,41 @@
 <div class="container">
   <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1 class="text-primary m-0">Edição de Tecnicos</h1>
+    <h1 class="text-primary m-0">Edição de Categorias</h1>
   </div>
   <div class="card shadow-sm border-0 form-container">
     <div class="card-body p-4">
-      <form (ngSubmit)="salvarTecnico()">
+      <form (ngSubmit)="salvarCategoria()">
         <div class="mb-3 row">
           <label for="staticID" class="col-sm-3 col-form-label">ID</label>
           <div class="col-sm-9">
-            <input type="text" readonly class="form-control-plaintext" id="staticID" value="{{tecnico.id}}">
+            <input type="text" readonly class="form-control-plaintext" id="staticID" value="{{categoria.id}}">
           </div>
         </div>
 
         <div class="mb-3 row">
-          <label for="inputContrato" class="col-sm-3 col-form-label">Usuário</label>
+          <label for="inputNome" class="col-sm-3 col-form-label">Nome</label>
           <div class="col-sm-9">
-            <select class="form-select" id="inputContrato" name="id_usuario" [(ngModel)]="tecnico.id_usuario" required>
+            <input type="text" class="form-control" id="inputNome" name="nome" [(ngModel)]="categoria.descricao" required>
+          </div>
+        </div>
+
+        <div class="mb-3 row">
+          <label for="inputContrato" class="col-sm-3 col-form-label">Categoria Pai</label>
+          <div class="col-sm-9">
+            <select class="form-select" id="inputContrato" name="id_categoria_pai" [(ngModel)]="categoria.id_categoria_pai" required>
               <option value="" disabled>Selecione um contrato</option>
+              <option *ngFor="let categoria_pai of categorias_pai" [value]="categoria_pai.id">{{ categoria_pai.descricao }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="mb-3 row">
+          <label for="inputContrato" class="col-sm-3 col-form-label">Responsavel</label>
+          <div class="col-sm-9">
+            <select class="form-select" id="inputContrato" name="id_responsavel" [(ngModel)]="categoria.id_responsavel" required>
+              <option value="" disabled>Selecione um responsável</option>
               <option *ngFor="let usuario of usuarios" [value]="usuario.id">{{ usuario.nome }}</option>
             </select>
-          </div>
-        </div>
-
-        <div class="mb-3 row">
-          <label for="inputContrato" class="col-sm-3 col-form-label">Categoria</label>
-          <div class="col-sm-9">
-            <select class="form-select" id="inputContrato" name="id_categoria" [(ngModel)]="tecnico.id_categoria" required>
-              <option value="" disabled>Selecione um contrato</option>
-              <option *ngFor="let categoria of categorias" [value]="categoria.id">{{ categoria.descricao }}</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="mb-3 row">
-          <label for="inputNome" class="col-sm-3 col-form-label">Know-how</label>
-          <div class="col-sm-9">
-            <input type="number" class="form-control" id="inputNome" name="know_how" [(ngModel)]="tecnico.know_how" required>
           </div>
         </div>
 
@@ -43,7 +43,7 @@
           <label for="inputInicio" class="col-sm-3 col-form-label">Início Vigência</label>
           <div class="col-sm-9">
             <input type="date" class="form-control" id="inputInicio" name="inicio_vigencia"
-                   [(ngModel)]="tecnico.inicio_vigencia" required>
+                   [(ngModel)]="categoria.inicio_vigencia" required>
           </div>
         </div>
 
@@ -51,15 +51,14 @@
           <label for="inputFim" class="col-sm-3 col-form-label">Fim Vigência</label>
           <div class="col-sm-9">
             <input type="date" class="form-control" id="inputFim" name="fim_vigencia"
-                   [(ngModel)]="tecnico.fim_vigencia">
+                   [(ngModel)]="categoria.fim_vigencia">
           </div>
         </div>
-
         <div class="d-flex justify-content-end gap-2 mt-4">
           <button type="submit" class="btn btn-success">
             <i class="bi bi-check-circle me-1"></i> Alterar
           </button>
-          <a routerLink="/tecnico/listagem" class="btn btn-outline-secondary">
+          <a routerLink="/categoria/listagem" class="btn btn-outline-secondary">
             <i class="bi bi-x-circle me-1"></i> Cancelar
           </a>
         </div>
